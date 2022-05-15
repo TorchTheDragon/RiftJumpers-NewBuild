@@ -294,7 +294,7 @@ class TitleState extends MusicBeatState
 			{
 				// Get current version of Kade Engine
 				
-				var http = new haxe.Http("https://raw.githubusercontent.com/TorchTheDragon/RfitJumpers-NewBuild/master/version.downloadMe");
+				var http = new haxe.Http("https://raw.githubusercontent.com/TorchTheDragon/RiftJumpers-NewBuild/master/version.downloadMe");
 				var returnedData:Array<String> = [];
 				
 				http.onData = function (data:String)
