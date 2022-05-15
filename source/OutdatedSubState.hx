@@ -50,7 +50,7 @@ class OutdatedSubState extends MusicBeatState
 			+ "\nwhile the most recent version is " + needVer + "."
 			+ "\n\nWhat's new:\n\n"
 			+ currChanges
-			+ "\n\nPress ESCAPE to ignore this",
+			+ "\n\nPress ESCAPE/ENTER to ignore this",
 			32);
 
 		if (MainMenuState.nightly != "")
@@ -92,11 +92,7 @@ class OutdatedSubState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.ACCEPT && MainMenuState.nightly == "")
-		{
-			fancyOpenURL("https://kadedev.github.io/Kade-Engine/changelogs/changelog-" + needVer);
-		}
-		else if (controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
 			leftState = true;
 			FlxG.switchState(new MainMenuState());
