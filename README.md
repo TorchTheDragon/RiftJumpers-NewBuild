@@ -74,7 +74,9 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 - [KadeDeveloper](https://twitter.com/KadeDeveloper) - Maintainer and lead programmer
 - [The contributors](https://github.com/KadeDev/Kade-Engine/graphs/contributors)
 
-
+### [Playable GF (If I add it)](https://gamebanana.com/mods/363954)
+- VoidEyedPanda - [YouTube](https://www.youtube.com/channel/UCtsc-4fC0f_aaDHzDn7LaIQ), [Gamebanana](https://gamebanana.com/members/1965633)
+- Redsty Phoenix - [YouTube](https://www.youtube.com/channel/UC2ma4z5rpdS0S1ccJcrra5Q), [Gamebanana](https://gamebanana.com/members/1846470)
 
 ### Shoutouts
 - [GWebDev](https://github.com/GrowtopiaFli) - Video Code

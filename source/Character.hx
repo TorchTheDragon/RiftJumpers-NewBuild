@@ -332,6 +332,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel':
+				noteSkin = 'normal';
 				healthColor = 0xFF31B0D1;
 				frames = Paths.getSparrowAtlas('bfPixel','shared',true);
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -358,6 +359,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel-dead':
+				noteSkin = 'normal';
 				healthColor = 0xFF31B0D1;
 				frames = Paths.getSparrowAtlas('bfPixelsDEAD','shared',true);
 				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
