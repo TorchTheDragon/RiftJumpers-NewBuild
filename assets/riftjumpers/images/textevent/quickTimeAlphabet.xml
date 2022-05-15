@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="quickTimeAlphabet.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="!0000" x="0" y="0" width="154" height="155"/>
+	<SubTexture name="#0000" x="154" y="0" width="154" height="155"/>
+	<SubTexture name="$0000" x="308" y="0" width="154" height="155"/>
+	<SubTexture name="%0000" x="462" y="0" width="154" height="155"/>
+	<SubTexture name="&0000" x="616" y="0" width="154" height="155"/>
+	<SubTexture name="(0000" x="770" y="0" width="154" height="155"/>
+	<SubTexture name=")0000" x="924" y="0" width="154" height="155"/>
+	<SubTexture name="*0000" x="1078" y="0" width="154" height="155"/>
+	<SubTexture name=",0000" x="1232" y="0" width="154" height="155"/>
+	<SubTexture name=".0000" x="1386" y="0" width="154" height="155"/>
+	<SubTexture name="00000" x="1540" y="0" width="154" height="155"/>
+	<SubTexture name="10000" x="1694" y="0" width="154" height="155"/>
+	<SubTexture name="20000" x="1848" y="0" width="154" height="155"/>
+	<SubTexture name="30000" x="0" y="155" width="154" height="155"/>
+	<SubTexture name="40000" x="154" y="155" width="154" height="155"/>
+	<SubTexture name="50000" x="308" y="155" width="154" height="155"/>
+	<SubTexture name="60000" x="462" y="155" width="154" height="155"/>
+	<SubTexture name="70000" x="616" y="155" width="154" height="155"/>
+	<SubTexture name="80000" x="770" y="155" width="154" height="155"/>
+	<SubTexture name="90000" x="924" y="155" width="154" height="155"/>
+	<SubTexture name="?0000" x="1078" y="155" width="154" height="155"/>
+	<SubTexture name="@0000" x="1232" y="155" width="154" height="155"/>
+	<SubTexture name="A0000" x="1386" y="155" width="154" height="155"/>
+	<SubTexture name="B0000" x="1540" y="155" width="154" height="155"/>
+	<SubTexture name="C0000" x="1694" y="155" width="154" height="155"/>
+	<SubTexture name="D0000" x="1848" y="155" width="154" height="155"/>
+	<SubTexture name="E0000" x="0" y="310" width="154" height="155"/>
+	<SubTexture name="F0000" x="154" y="310" width="154" height="155"/>
+	<SubTexture name="G0000" x="308" y="310" width="154" height="155"/>
+	<SubTexture name="H0000" x="462" y="310" width="154" height="155"/>
+	<SubTexture name="I0000" x="616" y="310" width="154" height="155"/>
+	<SubTexture name="J0000" x="770" y="310" width="154" height="155"/>
+	<SubTexture name="K0000" x="924" y="310" width="154" height="155"/>
+	<SubTexture name="L0000" x="1078" y="310" width="154" height="155"/>
+	<SubTexture name="M0000" x="1232" y="310" width="154" height="155"/>
+	<SubTexture name="N0000" x="1386" y="310" width="154" height="155"/>
+	<SubTexture name="O0000" x="1540" y="310" width="154" height="155"/>
+	<SubTexture name="P0000" x="1694" y="310" width="154" height="155"/>
+	<SubTexture name="Q0000" x="1848" y="310" width="154" height="155"/>
+	<SubTexture name="R0000" x="0" y="465" width="154" height="155"/>
+	<SubTexture name="S0000" x="154" y="465" width="154" height="155"/>
+	<SubTexture name="T0000" x="308" y="465" width="154" height="155"/>
+	<SubTexture name="U0000" x="462" y="465" width="154" height="155"/>
+	<SubTexture name="V0000" x="616" y="465" width="154" height="155"/>
+	<SubTexture name="W0000" x="770" y="465" width="154" height="155"/>
+	<SubTexture name="X0000" x="924" y="465" width="154" height="155"/>
+	<SubTexture name="Y0000" x="1078" y="465" width="154" height="155"/>
+	<SubTexture name="Z0000" x="1232" y="465" width="154" height="155"/>
+	<SubTexture name="^0000" x="1386" y="465" width="154" height="155"/>
+</TextureAtlas>

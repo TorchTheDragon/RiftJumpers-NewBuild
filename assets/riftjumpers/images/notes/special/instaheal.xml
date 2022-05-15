@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="instaheal.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="healDOWN0000" x="0" y="0" width="157" height="154"/>
+	<SubTexture name="healDOWN0001" x="157" y="0" width="157" height="154"/>
+	<SubTexture name="healDOWN0002" x="314" y="0" width="157" height="154"/>
+	<SubTexture name="healDOWN0003" x="314" y="0" width="157" height="154"/>
+	<SubTexture name="healDOWN0004" x="157" y="0" width="157" height="154"/>
+	<SubTexture name="healDOWN0005" x="0" y="0" width="157" height="154"/>
+	<SubTexture name="healLEFT0000" x="471" y="0" width="154" height="157"/>
+	<SubTexture name="healLEFT0001" x="625" y="0" width="154" height="157"/>
+	<SubTexture name="healLEFT0002" x="779" y="0" width="154" height="157"/>
+	<SubTexture name="healLEFT0003" x="779" y="0" width="154" height="157"/>
+	<SubTexture name="healLEFT0004" x="625" y="0" width="154" height="157"/>
+	<SubTexture name="healLEFT0005" x="471" y="0" width="154" height="157"/>
+	<SubTexture name="healRIGHT0000" x="0" y="157" width="154" height="156"/>
+	<SubTexture name="healRIGHT0001" x="154" y="157" width="154" height="156"/>
+	<SubTexture name="healRIGHT0002" x="308" y="157" width="154" height="156"/>
+	<SubTexture name="healRIGHT0003" x="308" y="157" width="154" height="156"/>
+	<SubTexture name="healRIGHT0004" x="154" y="157" width="154" height="156"/>
+	<SubTexture name="healRIGHT0005" x="0" y="157" width="154" height="156"/>
+	<SubTexture name="healUP0000" x="462" y="157" width="157" height="154"/>
+	<SubTexture name="healUP0001" x="619" y="157" width="157" height="154"/>
+	<SubTexture name="healUP0002" x="776" y="157" width="157" height="154"/>
+	<SubTexture name="healUP0003" x="776" y="157" width="157" height="154"/>
+	<SubTexture name="healUP0004" x="619" y="157" width="157" height="154"/>
+	<SubTexture name="healUP0005" x="462" y="157" width="157" height="154"/>
+</TextureAtlas>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="fire.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="flameDown0000" x="0" y="0" width="157" height="154"/>
+	<SubTexture name="flameDown0001" x="0" y="0" width="157" height="154"/>
+	<SubTexture name="flameDown0002" x="157" y="0" width="157" height="154"/>
+	<SubTexture name="flameDown0003" x="157" y="0" width="157" height="154"/>
+	<SubTexture name="flameDown0004" x="314" y="0" width="157" height="154"/>
+	<SubTexture name="flameDown0005" x="314" y="0" width="157" height="154"/>
+	<SubTexture name="flameLeft0000" x="471" y="0" width="154" height="157"/>
+	<SubTexture name="flameLeft0001" x="471" y="0" width="154" height="157"/>
+	<SubTexture name="flameLeft0002" x="625" y="0" width="154" height="157"/>
+	<SubTexture name="flameLeft0003" x="625" y="0" width="154" height="157"/>
+	<SubTexture name="flameLeft0004" x="779" y="0" width="154" height="157"/>
+	<SubTexture name="flameLeft0005" x="779" y="0" width="154" height="157"/>
+	<SubTexture name="flameRight0000" x="0" y="157" width="154" height="156"/>
+	<SubTexture name="flameRight0001" x="0" y="157" width="154" height="156"/>
+	<SubTexture name="flameRight0002" x="154" y="157" width="154" height="156"/>
+	<SubTexture name="flameRight0003" x="154" y="157" width="154" height="156"/>
+	<SubTexture name="flameRight0004" x="308" y="157" width="154" height="156"/>
+	<SubTexture name="flameRight0005" x="308" y="157" width="154" height="156"/>
+	<SubTexture name="flameUp0000" x="462" y="157" width="157" height="154"/>
+	<SubTexture name="flameUp0001" x="462" y="157" width="157" height="154"/>
+	<SubTexture name="flameUp0002" x="619" y="157" width="157" height="154"/>
+	<SubTexture name="flameUp0003" x="619" y="157" width="157" height="154"/>
+	<SubTexture name="flameUp0004" x="776" y="157" width="157" height="154"/>
+	<SubTexture name="flameUp0005" x="776" y="157" width="157" height="154"/>
+</TextureAtlas>
