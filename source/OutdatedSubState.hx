@@ -45,19 +45,18 @@ class OutdatedSubState extends MusicBeatState
 		add(kadeLogo);
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Your Kade Engine is outdated!\nYou are on "
-			+ MainMenuState.kadeEngineVer
+			"Your version of Rift Jumpers is old!\nYou are on "
+			+ MainMenuState.riftJumpersVer
 			+ "\nwhile the most recent version is " + needVer + "."
 			+ "\n\nWhat's new:\n\n"
 			+ currChanges
-			+ "\n& more changes and bugfixes in the full changelog"
-			+ "\n\nPress Space to view the full changelog and update\nor ESCAPE to ignore this",
+			+ "\n\nPress ESCAPE to ignore this",
 			32);
 
 		if (MainMenuState.nightly != "")
 			txt.text = 
 			"You are on\n"
-			+ MainMenuState.kadeEngineVer
+			+ MainMenuState.riftJumpersVer
 			+ "\nWhich is a PRE-RELEASE BUILD!"
 			+ "\n\nReport all bugs to the author of the pre-release.\nSpace/Escape ignores this.";
 		
