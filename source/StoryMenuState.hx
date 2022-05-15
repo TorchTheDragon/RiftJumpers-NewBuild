@@ -36,7 +36,7 @@ class StoryMenuState extends MusicBeatState
 			['Senpai', 'Roses', 'Thorns']
 		];
 	}
-	var curDifficulty:Int = 1;
+	var curDifficulty:Int = 2;
 
 	public static var weekUnlocked:Array<Bool> = [];
 

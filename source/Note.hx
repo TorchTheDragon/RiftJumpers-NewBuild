@@ -129,11 +129,45 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}
+					case 2:
+					{
+						loadGraphic(Paths.image('notes/pixel/combined/' + noteSkin + skin2, 'riftjumpers'), true, 17, 17);
+						if (isSustainNote)
+							loadGraphic(Paths.image('notes/pixel/combined/' + noteSkin + skin2 + 'Ends', 'riftjumpers'), true, 7, 6);
+						for (i in 0...4)
+						{
+							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes
+							animation.add(dataColor[i] + 'hold', [i]); // Holds
+							animation.add(dataColor[i] + 'holdend', [i + 4]); // Tails
+						}
+	
+						var widthSize = Std.int(PlayState.curStage.startsWith('school') ? (width * PlayState.daPixelZoom) : (isSustainNote ? (width * (PlayState.daPixelZoom - 1.5)) : (width * PlayState.daPixelZoom)));
+
+						setGraphicSize(widthSize);
+						updateHitbox();
+					}
+					case 1:
+					{
+						loadGraphic(Paths.image('notes/pixel/character/' + skin2, 'riftjumpers'), true, 17, 17);
+						if (isSustainNote)
+							loadGraphic(Paths.image('notes/pixel/character/' + skin2 + 'Ends', 'riftjumpers'), true, 7, 6);
+						for (i in 0...4)
+						{
+							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes
+							animation.add(dataColor[i] + 'hold', [i]); // Holds
+							animation.add(dataColor[i] + 'holdend', [i + 4]); // Tails
+						}
+	
+						var widthSize = Std.int(PlayState.curStage.startsWith('school') ? (width * PlayState.daPixelZoom) : (isSustainNote ? (width * (PlayState.daPixelZoom - 1.5)) : (width * PlayState.daPixelZoom)));
+
+						setGraphicSize(widthSize);
+						updateHitbox();
+					}	
 					case 0:
 					{
-						loadGraphic(Paths.image('notes/pixel/arrows-pixels', 'riftjumpers'), true, 17, 17);
+						loadGraphic(Paths.image('notes/pixel/character/' + noteSkin, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
-							loadGraphic(Paths.image('notes/pixel/arrowEnds', 'riftjumpers'), true, 7, 6);
+							loadGraphic(Paths.image('notes/pixel/character/' + noteSkin + 'Ends', 'riftjumpers'), true, 7, 6);
 						for (i in 0...4)
 						{
 							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes
