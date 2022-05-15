@@ -2716,8 +2716,9 @@ class ChartingState extends MusicBeatState
 				var daNoteInfo = i[1];
 				var daStrumTime = i[0];
 				var daSus = i[2];
+				var daType = i[3];
 
-				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false);
+				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
 				note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
