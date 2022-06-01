@@ -41,6 +41,9 @@ typedef SwagSong =
 	var noteStyle:String;
 	var stage:String;
 	var validScore:Bool;
+
+	var hasBF2:Bool;
+	var hasEnemy2:Bool;
 }
 
 class Song
@@ -60,6 +63,9 @@ class Song
 	public var gfVersion:String = '';
 	public var noteStyle:String = '';
 	public var stage:String = '';
+
+	public var hasBF2:Bool = false;
+	public var hasEnemy2:Bool = false;
 
 	public function new(song, notes, bpm)
 	{

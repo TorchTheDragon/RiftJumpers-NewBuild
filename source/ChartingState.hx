@@ -185,7 +185,9 @@ class ChartingState extends MusicBeatState
 				noteStyle: 'normal',
 				stage: 'stage',
 				speed: 1,
-				validScore: false
+				validScore: false,
+				hasBF2: false,
+				hasEnemy2: false
 			};
 		}
 
@@ -1152,6 +1154,22 @@ class ChartingState extends MusicBeatState
 
 		var noteStyleLabel = new FlxText(10,280,64,'Note Skin');
 
+		var check_hasBF2 = new FlxUICheckBox(gfVersionDropDown.x, gfVersionDropDown.y + 50, null, null, "Has BF2", 100);
+		check_hasBF2.checked = _song.hasBF2;
+		// _song.needsVoices = check_voices.checked;
+		check_hasBF2.callback = function()
+		{
+			_song.hasBF2 = check_hasBF2.checked;
+		};
+
+		var check_hasEnemy2 = new FlxUICheckBox(stageDropDown.x, stageDropDown.y + 50, null, null, "Has Enemy2", 100);
+		check_hasEnemy2.checked = _song.hasEnemy2;
+		// _song.needsVoices = check_voices.checked;
+		check_hasEnemy2.callback = function()
+		{
+			_song.hasEnemy2 = check_hasEnemy2.checked;
+		};
+
 		/*
 		var hasOtherCharacters:FlxUICheckBox = new FlxUICheckBox(gfVersionDropDown.x, gfVersionDropDown.y + 50, null, null, "Has Other Characters", 100);
 		hasOtherCharacters.name = 'hasOtherCharacters';
@@ -1216,6 +1234,8 @@ class ChartingState extends MusicBeatState
 		tab_group_assets.add(player2Label);
 		tab_group_assets.add(player3Label);
 		tab_group_assets.add(player4Label);
+		tab_group_assets.add(check_hasBF2);
+		tab_group_assets.add(check_hasEnemy2);
 
 		UI_box.addGroup(tab_group_song);
 		UI_box.addGroup(tab_group_assets);

@@ -1035,12 +1035,12 @@ class PlayState extends MusicBeatState
 			if (curStage == 'limo')
 				add(limo);
 
-			if (SONG.song == 'Dad Battle')
-				{
-					add(enemy2);
-					add(bf2);
-				}
+			if (SONG.hasBF2 == true)
+				add(bf2);
 
+			if(SONG.hasEnemy2 == true)
+				add(enemy2);
+			
 			add(dad);
 			add(boyfriend);
 		}
@@ -1081,8 +1081,9 @@ class PlayState extends MusicBeatState
 		cpuStrums = new FlxTypedGroup<FlxSprite>();
 
 		generateStaticArrows(0, 'character/' + dad.noteSkin);
-		currentEnemyStatics = dad.noteSkin;
 		generateStaticArrows(1, 'character/' + boyfriend.noteSkin);
+
+		currentEnemyStatics = dad.noteSkin;
 		currentBfStatics = boyfriend.noteSkin;
 
 		// startCountdown();
@@ -1235,14 +1236,15 @@ class PlayState extends MusicBeatState
 			songName.cameras = [camHUD];
 		}
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9 - 25).loadGraphic(Paths.image('healthbars/' + realm + '/healthBar-default', 'riftjumpers'));
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthbars/' + realm + '/healthBar-default', 'riftjumpers'));
 		if (PlayStateChangeables.useDownscroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
+		healthBarBG.visible = false;
 		add(healthBarBG);
 
-		healthBar = new FlxBar(healthBarBG.x /*+ 4*/, healthBarBG.y, RIGHT_TO_LEFT, Std.int(healthBarBG.width /*- 8*/), Std.int(healthBarBG.height /*- 8*/), this,
+		healthBar = new FlxBar(healthBarBG.x /*+ 4*/, healthBarBG.y - 25, RIGHT_TO_LEFT, Std.int(healthBarBG.width /*- 8*/), Std.int(healthBarBG.height /*- 8*/), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		//healthBar.createImageBar(Paths.image('healthbars/healthBar-' + enemyHealthBar, 'riftjumpers'), Paths.image('healthbars/healthBar-' + bfHealthBar, 'riftjumpers'));
@@ -1298,33 +1300,44 @@ class PlayState extends MusicBeatState
 		if (PlayStateChangeables.botPlay && !loadRep)
 			add(botPlayState);
 
+		function iconY(icon:HealthIcon)
+		{
+			var yValue;
+			switch (icon.char.toLowerCase())
+			{
+				case 'torch':
+					yValue = healthBar.y - (icon.height / 2) + 25;
+				default:
+					yValue = healthBar.y - (icon.height / 2) + 15;
+			}
+			return yValue;
+		}
+
 		iconP1 = new HealthIcon(SONG.bf, true);
-		iconP1.y = healthBar.y - (iconP1.height / 2) + 15;
+		iconP1.y = iconY(iconP1);
 		add(iconP1);
 
 		iconP2 = new HealthIcon(SONG.enemy, false);
-		iconP2.y = healthBar.y - (iconP2.height / 2) + 15;
+		iconP2.y = iconY(iconP2);
 		add(iconP2);
 
 		iconP3 = new HealthIcon(SONG.bf2, true);
-		iconP3.y = healthBar.y - (iconP3.height / 2) + 15;
+		iconP3.y = iconY(iconP3);
 		iconP3.visible = false;
 		add(iconP3);
 		
 		iconP4 = new HealthIcon(SONG.enemy2, false);
-		iconP4.y = healthBar.y - (iconP4.height / 2) + 15;
+		iconP4.y = iconY(iconP4);
 		iconP4.visible = false;
 		add(iconP4);
 		
 		smolP3icon = new HealthIcon(SONG.bf2, true);
-		smolP3icon.setSize(smolP3icon.width * 0.6, smolP3icon.height * 0.6);
-		smolP3icon.y = iconP1.y - 10;
+		smolP3icon.y = iconP1.y + 75;
 		smolP3icon.visible = false;
 		add(smolP3icon);
 
 		smolP4icon = new HealthIcon(SONG.enemy2, false);
-		smolP4icon.setSize(smolP4icon.width * 0.6, smolP4icon.height * 0.6);
-		smolP4icon.y = iconP2.y - 10;
+		smolP4icon.y = iconP2.y + 75;
 		smolP4icon.visible = false;
 		add(smolP4icon);
 
@@ -2263,7 +2276,13 @@ class PlayState extends MusicBeatState
 
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
-			babyArrow.x += ((FlxG.width / 2) * player);
+			if (SONG.song.toLowerCase() == 'test')
+				{
+				babyArrow.x += ((FlxG.width / 2) * 0.5);
+				cpuStrums.visible = false;
+				}
+			else
+				babyArrow.x += ((FlxG.width / 2) * player);
 
 			if (PlayStateChangeables.Optimize)
 				babyArrow.x -= 275;
@@ -2655,8 +2674,8 @@ class PlayState extends MusicBeatState
 		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
 		iconP3.setGraphicSize(Std.int(FlxMath.lerp(150, iconP3.width, 0.50)));
 		iconP4.setGraphicSize(Std.int(FlxMath.lerp(150, iconP4.width, 0.50)));
-		smolP3icon.setGraphicSize(Std.int(FlxMath.lerp(150, smolP3icon.width, 0.50)));
-		smolP4icon.setGraphicSize(Std.int(FlxMath.lerp(150, smolP4icon.width, 0.50)));
+		smolP3icon.setGraphicSize(Std.int(FlxMath.lerp(90, smolP3icon.width, 0.50)));
+		smolP4icon.setGraphicSize(Std.int(FlxMath.lerp(90, smolP4icon.width, 0.50)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2671,8 +2690,8 @@ class PlayState extends MusicBeatState
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 		iconP3.x = iconP1.x;
 		iconP4.x = iconP2.x;
-		smolP3icon.x = iconP1.x + 10;
-		smolP4icon.x = iconP2.x - 10;
+		smolP3icon.x = iconP1.x + 60;
+		smolP4icon.x = iconP2.x - 30;
 
 		if (health > 2)
 			health = 2;
@@ -3317,6 +3336,13 @@ class PlayState extends MusicBeatState
 								updateEnemyStaticNotes(enemy2.noteSkin);
 							if (enemyHealthBar != enemy2.curCharacter)
 								updateHealthBarColor();
+							if (iconP4.visible == false || iconP2.visible == true || smolP4icon.visible == true)
+								{
+									iconP2.visible = false;
+									smolP4icon.visible = false;
+									iconP4.visible = true;
+								}
+							
 						}
 						case 2:
 						{
@@ -3325,6 +3351,12 @@ class PlayState extends MusicBeatState
 								updateEnemyStaticNotes(dad.noteSkin + enemy2.noteSkin, true);
 							if (enemyHealthBar != dad.curCharacter)
 								updateHealthBarColor();
+							if (iconP2.visible == false || smolP4icon.visible == false || iconP4.visible == true)
+								{
+									iconP2.visible = true;
+									smolP4icon.visible = true;
+									iconP4.visible = false;
+								}
 						}	
 						case 0:
 						{
@@ -3333,6 +3365,12 @@ class PlayState extends MusicBeatState
 								updateEnemyStaticNotes();
 							if (enemyHealthBar != dad.curCharacter)
 								updateHealthBarColor();
+							if (iconP2.visible == false || smolP4icon.visible == true || iconP4.visible == true)
+								{
+									iconP2.visible = true;
+									smolP4icon.visible = false;
+									iconP4.visible = false;
+								}
 						}
 					}
 
@@ -3840,7 +3878,7 @@ class PlayState extends MusicBeatState
 					updateBFStaticNotes();
 				if (bfHealthBar != boyfriend.curCharacter)
 					updateHealthBarColor();
-				if (iconP1.visible == false)
+				if (iconP1.visible == false || smolP3icon.visible == true || iconP3.visible == true)
 					{
 						iconP1.visible = true;
 						smolP3icon.visible = false;
@@ -3855,7 +3893,7 @@ class PlayState extends MusicBeatState
 					updateBFStaticNotes(bf2.noteSkin);
 				if (bfHealthBar != bf2.curCharacter)
 					updateHealthBarColor();
-				if (iconP3.visible == false)
+				if (iconP1.visible == true || smolP3icon.visible == true || iconP3.visible == false)
 					{
 						iconP1.visible = false;
 						smolP3icon.visible = false;
@@ -3870,7 +3908,7 @@ class PlayState extends MusicBeatState
 					updateBFStaticNotes(boyfriend.noteSkin + bf2.noteSkin, true);
 				if (bfHealthBar !=  boyfriend.curCharacter)
 					updateHealthBarColor();
-				if (iconP1.visible == false || smolP3icon.visible == false)
+				if (iconP1.visible == false || smolP3icon.visible == false || iconP3.visible == true)
 					{
 						iconP1.visible = true;
 						smolP3icon.visible = true;
