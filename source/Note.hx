@@ -66,7 +66,7 @@ class Note extends FlxSprite
 
 	public var children:Array<Note> = [];
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int = 0, ?noteSkin:String = 'normal', ?skin2:String = 'normal')
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int = 0, ?noteSkin:String = 'normal', ?skin2:String = 'normal', ?isAlt:Bool = false)
 	{
 		super();
 
@@ -117,6 +117,7 @@ class Note extends FlxSprite
 						loadGraphic(Paths.image('notes/pixel/special/lightsOut', 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
 							loadGraphic(Paths.image('notes/pixel/special/lightsOutEnds', 'riftjumpers'), true, 7, 6);
+					
 						for (i in 0...4)
 						{
 							animation.add(dataColor[i] + 'Scroll', [i]); // Normal notes
@@ -129,11 +130,12 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}
-					case 2:
+					case 2 | 6:
 					{
 						loadGraphic(Paths.image('notes/pixel/combined/' + noteSkin + skin2, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
 							loadGraphic(Paths.image('notes/pixel/combined/' + noteSkin + skin2 + 'Ends', 'riftjumpers'), true, 7, 6);
+
 						for (i in 0...4)
 						{
 							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes
@@ -146,11 +148,12 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}
-					case 1:
+					case 1 | 5:
 					{
 						loadGraphic(Paths.image('notes/pixel/character/' + skin2, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
 							loadGraphic(Paths.image('notes/pixel/character/' + skin2 + 'Ends', 'riftjumpers'), true, 7, 6);
+
 						for (i in 0...4)
 						{
 							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes
@@ -163,11 +166,12 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}	
-					case 0:
+					case 0 | 4:
 					{
 						loadGraphic(Paths.image('notes/pixel/character/' + noteSkin, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
 							loadGraphic(Paths.image('notes/pixel/character/' + noteSkin + 'Ends', 'riftjumpers'), true, 7, 6);
+
 						for (i in 0...4)
 						{
 							animation.add(dataColor[i] + 'Scroll', [i + 4]); // Normal notes

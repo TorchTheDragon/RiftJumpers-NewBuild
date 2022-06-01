@@ -1401,13 +1401,13 @@ class ChartingState extends MusicBeatState
 			{
 				for(i in selectedBoxes)
 				{
-					i.connectedNoteData[3] = check_naltAnim.checked;
+					i.connectedNoteData[4] = check_naltAnim.checked;
 
 					for(ii in _song.notes)
 					{
 						for(n in ii.sectionNotes)
 							if (n[0] == i.connectedNoteData[0] && n[1] == i.connectedNoteData[1])
-								n[3] = i.connectedNoteData[3];
+								n[4] = i.connectedNoteData[4];
 					}
 				}
 			}
@@ -1730,6 +1730,8 @@ class ChartingState extends MusicBeatState
 				noteTypeText = 'Duet';
 			case 3:
 				noteTypeText = 'Lights Out';
+			case 4 | 5 | 6:
+				noteTypeText = 'Test ' + noteType;
 		}
 
 		for(i in sectionRenderes)
@@ -2626,7 +2628,7 @@ class ChartingState extends MusicBeatState
 		{
 			var strum = note[0] + Conductor.stepCrochet * (_song.notes[daSec].lengthInSteps * sectionNum);
 
-			var copiedNote:Array<Dynamic> = [strum, note[1], note[2],note[3]];
+			var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3], note[4]];
 			sect.sectionNotes.push(copiedNote);
 		}
 
@@ -2670,11 +2672,11 @@ class ChartingState extends MusicBeatState
 		if (curSelectedNote != null)
 		{
 			stepperSusLength.value = curSelectedNote[2];
-			if (curSelectedNote[3] != null)
-				check_naltAnim.checked = curSelectedNote[3];
+			if (curSelectedNote[4] != null)
+				check_naltAnim.checked = curSelectedNote[4];
 			else
 			{
-				curSelectedNote[3] = false;
+				curSelectedNote[4] = false;
 				check_naltAnim.checked = false;
 			}
 		}
@@ -2718,7 +2720,7 @@ class ChartingState extends MusicBeatState
 				var daSus = i[2];
 				var daType = i[3];
 
-				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType);
+				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType, null, null, i[4]);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
 				note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));

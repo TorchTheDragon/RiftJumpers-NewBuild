@@ -1,6 +1,5 @@
 package;
 
-
 import Song.Event;
 import openfl.media.Sound;
 #if sys
@@ -146,6 +145,10 @@ class PlayState extends MusicBeatState
 	var enemy2:Character;
 	var bf2:Boyfriend;
 
+	var enemyHealthBar:String = 'dad';
+	var bfHealthBar:String = 'bf';
+	var realm:String = 'FNF';
+
 	var staticEnemyNotesChanged:Bool = false;
 	var staticEnemyDuet:Bool = false;
 	var staticBfNotesChanged:Bool = false;
@@ -209,8 +212,12 @@ class PlayState extends MusicBeatState
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
 
-	public var iconP1:HealthIcon; // making these public again because i may be stupid
-	public var iconP2:HealthIcon; // what could go wrong?
+	public var iconP1:HealthIcon; // BF
+	public var iconP2:HealthIcon; // ENEMY
+	public var iconP3:HealthIcon; // BF2
+	public var iconP4:HealthIcon; //ENEMY2
+	public var smolP3icon:HealthIcon; // Used for BF and BF2 duet
+	public var smolP4icon:HealthIcon; // Used for ENEMY and ENEMY2 duet
 	public var camHUD:FlxCamera;
 	public var camSustains:FlxCamera;
 	public var camNotes:FlxCamera;
@@ -930,6 +937,7 @@ class PlayState extends MusicBeatState
 		gf.scrollFactor.set(0.95, 0.95);
 
 		dad = new Character(100, 100, SONG.enemy);
+		enemyHealthBar = dad.curCharacter;
 		enemy2 = new Character(dad.x - 200, dad.y, SONG.enemy2);
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
@@ -986,6 +994,7 @@ class PlayState extends MusicBeatState
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.bf);
+		bfHealthBar = boyfriend.curCharacter;
 		bf2 = new Boyfriend(boyfriend.x + 300, boyfriend.y, SONG.bf2);
 
 		// REPOSITIONING PER STAGE
@@ -1071,9 +1080,9 @@ class PlayState extends MusicBeatState
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 		cpuStrums = new FlxTypedGroup<FlxSprite>();
 
-		generateStaticArrows(0, dad.noteSkin);
+		generateStaticArrows(0, 'character/' + dad.noteSkin);
 		currentEnemyStatics = dad.noteSkin;
-		generateStaticArrows(1, boyfriend.noteSkin);
+		generateStaticArrows(1, 'character/' + boyfriend.noteSkin);
 		currentBfStatics = boyfriend.noteSkin;
 
 		// startCountdown();
@@ -1108,7 +1117,25 @@ class PlayState extends MusicBeatState
 				for(i in 0...notes.members.length)
 				{
 					var dunceNote:Note = notes.members[i];
+					var slideX = dunceNote.x;
 	
+					function bfDownScroll(dunceNote:Note):Void
+					{
+						dunceNote.y = (playerStrums.members[Math.floor(Math.abs(dunceNote.noteData))].y + 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) - dunceNote.noteYOff;
+					}
+					function bfUpScroll(dunceNote:Note):Void
+					{
+						dunceNote.y = (playerStrums.members[Math.floor(Math.abs(dunceNote.noteData))].y - 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) + dunceNote.noteYOff;
+					}
+					function enemyDownScroll(dunceNote:Note):Void
+					{
+						dunceNote.y = (strumLineNotes.members[Math.floor(Math.abs(dunceNote.noteData))].y + 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) - dunceNote.noteYOff;
+					}
+					function enemyUpScroll(dunceNote:Note):Void
+					{
+						dunceNote.y = (strumLineNotes.members[Math.floor(Math.abs(dunceNote.noteData))].y - 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) - dunceNote.noteYOff;
+					}
+
 					if (dunceNote.strumTime - startTime <= 0)
 						toBeRemoved.push(dunceNote);
 					else 
@@ -1116,24 +1143,41 @@ class PlayState extends MusicBeatState
 						if (PlayStateChangeables.useDownscroll)
 						{
 							if (dunceNote.mustPress)
-								dunceNote.y = (playerStrums.members[Math.floor(Math.abs(dunceNote.noteData))].y
-									+ 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-										2)) - dunceNote.noteYOff;
+								
+								switch (dunceNote.noteType)
+								{
+									default:
+									{
+										bfDownScroll(dunceNote);
+									}
+								}
 							else
-								dunceNote.y = (strumLineNotes.members[Math.floor(Math.abs(dunceNote.noteData))].y
-									+ 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-										2)) - dunceNote.noteYOff;
+								switch (dunceNote.noteType)
+								{
+									default:
+									{
+										enemyDownScroll(dunceNote);
+									}
+								}
 						}
 						else
 						{
 							if (dunceNote.mustPress)
-								dunceNote.y = (playerStrums.members[Math.floor(Math.abs(dunceNote.noteData))].y
-									- 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-										2)) + dunceNote.noteYOff;
+								switch (dunceNote.noteType)
+								{
+									default:
+									{
+										bfUpScroll(dunceNote);
+									}
+								}
 							else
-								dunceNote.y = (strumLineNotes.members[Math.floor(Math.abs(dunceNote.noteData))].y
-									- 0.45 * (startTime - dunceNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-										2)) + dunceNote.noteYOff;
+								switch (dunceNote.noteType)
+								{
+									default:
+									{
+										enemyUpScroll(dunceNote);
+									}
+								}
 						}
 					}
 				}
@@ -1191,17 +1235,20 @@ class PlayState extends MusicBeatState
 			songName.cameras = [camHUD];
 		}
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.9 - 25).loadGraphic(Paths.image('healthbars/' + realm + '/healthBar-default', 'riftjumpers'));
 		if (PlayStateChangeables.useDownscroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+		healthBar = new FlxBar(healthBarBG.x /*+ 4*/, healthBarBG.y, RIGHT_TO_LEFT, Std.int(healthBarBG.width /*- 8*/), Std.int(healthBarBG.height /*- 8*/), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		//healthBar.createImageBar(Paths.image('healthbars/healthBar-' + enemyHealthBar, 'riftjumpers'), Paths.image('healthbars/healthBar-' + bfHealthBar, 'riftjumpers'));
+		healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+		healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+		//healthBar.createFilledBar(enemyHealthBar, bfHealthBar);
 		// healthBar
 		add(healthBar);
 
@@ -1252,12 +1299,34 @@ class PlayState extends MusicBeatState
 			add(botPlayState);
 
 		iconP1 = new HealthIcon(SONG.bf, true);
-		iconP1.y = healthBar.y - (iconP1.height / 2);
+		iconP1.y = healthBar.y - (iconP1.height / 2) + 15;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(SONG.enemy, false);
-		iconP2.y = healthBar.y - (iconP2.height / 2);
+		iconP2.y = healthBar.y - (iconP2.height / 2) + 15;
 		add(iconP2);
+
+		iconP3 = new HealthIcon(SONG.bf2, true);
+		iconP3.y = healthBar.y - (iconP3.height / 2) + 15;
+		iconP3.visible = false;
+		add(iconP3);
+		
+		iconP4 = new HealthIcon(SONG.enemy2, false);
+		iconP4.y = healthBar.y - (iconP4.height / 2) + 15;
+		iconP4.visible = false;
+		add(iconP4);
+		
+		smolP3icon = new HealthIcon(SONG.bf2, true);
+		smolP3icon.setSize(smolP3icon.width * 0.6, smolP3icon.height * 0.6);
+		smolP3icon.y = iconP1.y - 10;
+		smolP3icon.visible = false;
+		add(smolP3icon);
+
+		smolP4icon = new HealthIcon(SONG.enemy2, false);
+		smolP4icon.setSize(smolP4icon.width * 0.6, smolP4icon.height * 0.6);
+		smolP4icon.y = iconP2.y - 10;
+		smolP4icon.visible = false;
+		add(smolP4icon);
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -1265,6 +1334,10 @@ class PlayState extends MusicBeatState
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
+		iconP3.cameras = [camHUD];
+		iconP4.cameras = [camHUD];
+		smolP3icon.cameras = [camHUD];
+		smolP4icon.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		if (FlxG.save.data.songPosition)
@@ -2023,7 +2096,7 @@ class PlayState extends MusicBeatState
 				susLength = susLength / Conductor.stepCrochet;
 				unspawnNotes.push(swagNote);
 
-				swagNote.isAlt = songNotes[3];
+				swagNote.isAlt = songNotes[4];
 
 				if (susLength > 0)
 					swagNote.isParent = true;
@@ -2043,7 +2116,7 @@ class PlayState extends MusicBeatState
 					
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
-					sustainNote.isAlt = songNotes[3];
+					sustainNote.isAlt = songNotes[4];
 
 					sustainNote.mustPress = gottaHitNote;
 
@@ -2109,8 +2182,9 @@ class PlayState extends MusicBeatState
 
 			switch (noteTypeCheck)
 			{
-				case 'pixel':
-					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
+				case 'pixel': 
+					//To allow for others to use Pixel as a style I will need to set this up like the other arrows. So, I'll need to create a spritesheet for Pixel style.
+					babyArrow.loadGraphic(Paths.image('notes/pixel/' + style, 'riftjumpers'), true, 17, 17);
 					babyArrow.animation.add('green', [6]);
 					babyArrow.animation.add('red', [7]);
 					babyArrow.animation.add('blue', [5]);
@@ -2444,6 +2518,10 @@ class PlayState extends MusicBeatState
 				healthBar.visible = false;
 				iconP1.visible = false;
 				iconP2.visible = false;
+				iconP3.visible = false;
+				iconP4.visible = false;
+				smolP3icon.visible = false;
+				smolP4icon.visible = false;
 				scoreTxt.visible = false;
 			}
 			else
@@ -2575,26 +2653,56 @@ class PlayState extends MusicBeatState
 
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
 		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
+		iconP3.setGraphicSize(Std.int(FlxMath.lerp(150, iconP3.width, 0.50)));
+		iconP4.setGraphicSize(Std.int(FlxMath.lerp(150, iconP4.width, 0.50)));
+		smolP3icon.setGraphicSize(Std.int(FlxMath.lerp(150, smolP3icon.width, 0.50)));
+		smolP4icon.setGraphicSize(Std.int(FlxMath.lerp(150, smolP4icon.width, 0.50)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+		iconP3.updateHitbox();
+		iconP4.updateHitbox();
+		smolP3icon.updateHitbox();
+		smolP4icon.updateHitbox();
 
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+		iconP3.x = iconP1.x;
+		iconP4.x = iconP2.x;
+		smolP3icon.x = iconP1.x + 10;
+		smolP4icon.x = iconP2.x - 10;
 
 		if (health > 2)
 			health = 2;
 		if (healthBar.percent < 20)
+			{
 			iconP1.animation.curAnim.curFrame = 1;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
-
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else
+			iconP3.animation.curAnim.curFrame = 1;
+			smolP3icon.animation.curAnim.curFrame = 1;
 			iconP2.animation.curAnim.curFrame = 0;
+			iconP4.animation.curAnim.curFrame = 0;
+			smolP4icon.animation.curAnim.curFrame = 0;
+			}
+		else if (healthBar.percent > 80)
+			{
+			iconP1.animation.curAnim.curFrame = 0;
+			iconP3.animation.curAnim.curFrame = 0;
+			smolP3icon.animation.curAnim.curFrame = 0;
+			iconP2.animation.curAnim.curFrame = 1;
+			iconP4.animation.curAnim.curFrame = 1;
+			smolP4icon.animation.curAnim.curFrame = 1;
+			}
+		else
+			{
+			iconP1.animation.curAnim.curFrame = 0;
+			iconP3.animation.curAnim.curFrame = 0;
+			smolP3icon.animation.curAnim.curFrame = 0;
+			iconP2.animation.curAnim.curFrame = 0;
+			iconP4.animation.curAnim.curFrame = 0;
+			smolP4icon.animation.curAnim.curFrame = 0;
+			}
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
@@ -2626,7 +2734,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ZERO)
 		{
-			FlxG.switchState(new AnimationDebug(SONG.player1));
+			FlxG.switchState(new AnimationDebug(SONG.bf));
 			clean();
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
@@ -3044,6 +3152,7 @@ class PlayState extends MusicBeatState
 				// instead of doing stupid y > FlxG.height
 				// we be men and actually calculate the time :)
 				daNote.alpha = noteOpacity;
+				
 				if (staticsLoaded == true)
 				{
 					cpuStrums.forEach(function(spr:FlxSprite)
@@ -3077,13 +3186,21 @@ class PlayState extends MusicBeatState
 					if (PlayStateChangeables.useDownscroll)
 					{
 						if (daNote.mustPress)
-							daNote.y = (playerStrums.members[Math.floor(Math.abs(daNote.noteData))].y
-								+ 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-									2)) - daNote.noteYOff;
+							switch (daNote.noteType)
+							{
+								default:
+								{
+									daNote.y = (playerStrums.members[Math.floor(Math.abs(daNote.noteData))].y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) - daNote.noteYOff;
+								}
+							}
 						else
-							daNote.y = (strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].y
-								+ 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-									2)) - daNote.noteYOff;
+							switch (daNote.noteType)
+							{
+								default:
+								{
+									daNote.y = (strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) - daNote.noteYOff;
+								}
+							}
 						if (daNote.isSustainNote)
 						{
 							// Remember = minus makes notes go up, plus makes them go down
@@ -3123,13 +3240,21 @@ class PlayState extends MusicBeatState
 					else
 					{
 						if (daNote.mustPress)
-							daNote.y = (playerStrums.members[Math.floor(Math.abs(daNote.noteData))].y
-								- 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-									2)) + daNote.noteYOff;
+							switch (daNote.noteType)
+							{
+								default:
+								{
+									daNote.y = (playerStrums.members[Math.floor(Math.abs(daNote.noteData))].y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) + daNote.noteYOff;
+								}
+							}
 						else
-							daNote.y = (strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].y
-								- 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed,
-									2)) + daNote.noteYOff;
+							switch (daNote.noteType)
+							{
+								default:
+								{
+									daNote.y = (strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? SONG.speed : PlayStateChangeables.scrollSpeed, 2)) + daNote.noteYOff;
+								}
+							}
 						if (daNote.isSustainNote)
 						{
 							daNote.y -= daNote.height / 2;
@@ -3189,19 +3314,25 @@ class PlayState extends MusicBeatState
 						{
 							enemySinging = 2;
 							if (staticEnemyNotesChanged == false)
-							updateEnemyStaticNotes(enemy2.noteSkin);
+								updateEnemyStaticNotes(enemy2.noteSkin);
+							if (enemyHealthBar != enemy2.curCharacter)
+								updateHealthBarColor();
 						}
 						case 2:
 						{
 							enemySinging = 3;
 							if (staticEnemyDuet == false)
 								updateEnemyStaticNotes(dad.noteSkin + enemy2.noteSkin, true);
+							if (enemyHealthBar != dad.curCharacter)
+								updateHealthBarColor();
 						}	
 						case 0:
 						{
 							enemySinging = 1;
 							if (staticEnemyDuet == true || staticEnemyNotesChanged == true)
 								updateEnemyStaticNotes();
+							if (enemyHealthBar != dad.curCharacter)
+								updateHealthBarColor();
 						}
 					}
 
@@ -3303,11 +3434,23 @@ class PlayState extends MusicBeatState
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-
+				
+				function lerp(a:Float, b:Float, ratio:Float)
+				{
+					return (a + (b - a) * ratio);
+				}
+				 
 				if (daNote.mustPress && !daNote.modifiedByLua)
 				{
-					daNote.visible = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].visible;
-					daNote.x = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].x;
+					var sight:Bool = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].visible;
+					daNote.visible = sight;
+					switch (daNote.noteType)
+					{
+						default:
+						{
+							daNote.x = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].x;
+						}
+					}
 					if (!daNote.isSustainNote)
 						daNote.modAngle = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].angle;
 					if (daNote.sustainActive)
@@ -3319,8 +3462,15 @@ class PlayState extends MusicBeatState
 				}
 				else if (!daNote.wasGoodHit && !daNote.modifiedByLua)
 				{
-					daNote.visible = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].visible;
-					daNote.x = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].x;
+					var sight:Bool = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].visible;
+					daNote.visible = sight;
+					switch (daNote.noteType)
+					{
+						default:
+						{
+							daNote.x = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].x;
+						}
+					}
 					if (!daNote.isSustainNote)
 						daNote.modAngle = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].angle;
 					if (daNote.sustainActive)
@@ -3361,7 +3511,7 @@ class PlayState extends MusicBeatState
 							{
 								switch (curType)
 								{
-									case 0 | 1 | 2:
+									case 0 | 1 | 2 | 4 | 5 | 6:
 									{
 										if(!PlayStateChangeables.botPlay)
 										{
@@ -3606,16 +3756,76 @@ class PlayState extends MusicBeatState
 	var timeShown = 0;
 	var currentTimingShown:FlxText = null;
 
-	function lightsOut():Void
+	function lightsOut(?noteInvisTime:Float = 0.75, ?fadingInTime:Float = 0.25, ?fadeInAmount:Float = 0.1, ?loops:Int = 10):Void
 	{
+		if (noteInvisTime == null)
+			noteInvisTime = 0.75;
+		if (fadingInTime == null)
+			fadingInTime = 0.25;
+		if (fadeInAmount == null)
+			fadeInAmount = 0.1;
+		if (loops == null)
+			loops = 10;
+		/*
+		var noteFade:Float = 0.1;
+		var noteMissingTime:Float = 0.75; 
+		var noteFadingTime:Float = 0.25; 
+		var noteFadingLoops:Int = 10;
+		*/
 		noteOpacity = 0.0;
-		new FlxTimer().start(noteMissingTime, function(lightsOn:FlxTimer)
+		new FlxTimer().start(noteInvisTime, function(lightsOn:FlxTimer)
 		{
-			new FlxTimer().start(noteFadingTime, function(fadeIn:FlxTimer)
+			new FlxTimer().start(fadingInTime, function(fadeIn:FlxTimer)
 			{
-			noteOpacity += noteFade;
-			}, noteFadingLoops);
+			noteOpacity += fadeInAmount;
+			}, loops);
 		});
+	}
+
+	function updateHealthBarColor():Void
+	{
+		if (playerSinging == 1)
+		{
+			bfHealthBar = boyfriend.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
+		if (playerSinging == 2)
+		{
+			bfHealthBar = bf2.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
+		if (playerSinging == 3)
+		{
+			bfHealthBar = boyfriend.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
+		if (enemySinging == 1)
+		{
+			enemyHealthBar = dad.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
+		if (enemySinging == 2)
+		{
+			enemyHealthBar = enemy2.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
+		if (enemySinging == 3)
+		{
+			enemyHealthBar = dad.curCharacter;
+			healthBar.createImageEmptyBar(Paths.image('healthbars/' + realm + '/healthBar-' + enemyHealthBar, 'riftjumpers'));
+			healthBar.createImageFilledBar(Paths.image('healthbars/' + realm + '/healthBar-' + bfHealthBar, 'riftjumpers'));
+			healthBar.updateBar();
+		}
 	}
 
 	function customNoteHit(curType:Int, ?daNote:Note):Void
@@ -3624,18 +3834,48 @@ class PlayState extends MusicBeatState
 		{
 			case 0:
 			{
-				playerSinging = 1;
-				updateBFStaticNotes();
+				if (playerSinging != 1)
+					playerSinging = 1;
+				if (staticBfNotesChanged == true || staticBfDuet == true)
+					updateBFStaticNotes();
+				if (bfHealthBar != boyfriend.curCharacter)
+					updateHealthBarColor();
+				if (iconP1.visible == false)
+					{
+						iconP1.visible = true;
+						smolP3icon.visible = false;
+						iconP3.visible = false;
+					}
 			}	
 			case 1:
 			{
-				playerSinging = 2;
-				updateBFStaticNotes(bf2.noteSkin);
+				if (playerSinging != 2)
+					playerSinging = 2;
+				if (staticBfNotesChanged == false)
+					updateBFStaticNotes(bf2.noteSkin);
+				if (bfHealthBar != bf2.curCharacter)
+					updateHealthBarColor();
+				if (iconP3.visible == false)
+					{
+						iconP1.visible = false;
+						smolP3icon.visible = false;
+						iconP3.visible = true;
+					}
 			}
 			case 2:
 			{
-				playerSinging = 3;
-				updateBFStaticNotes(boyfriend.noteSkin + bf2.noteSkin, true);
+				if (playerSinging != 3)
+					playerSinging = 3;
+				if (staticBfDuet == false)
+					updateBFStaticNotes(boyfriend.noteSkin + bf2.noteSkin, true);
+				if (bfHealthBar !=  boyfriend.curCharacter)
+					updateHealthBarColor();
+				if (iconP1.visible == false || smolP3icon.visible == false)
+					{
+						iconP1.visible = true;
+						smolP3icon.visible = true;
+						iconP3.visible = false;
+					}
 			}	
 			case 3:
 			{
@@ -4812,9 +5052,17 @@ class PlayState extends MusicBeatState
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		iconP3.setGraphicSize(Std.int(iconP3.width + 30));
+		iconP4.setGraphicSize(Std.int(iconP4.width + 30));
+		smolP3icon.setGraphicSize(Std.int(smolP3icon.width + 30));
+		smolP4icon.setGraphicSize(Std.int(smolP4icon.width + 30));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+		iconP3.updateHitbox();
+		iconP4.updateHitbox();
+		smolP3icon.updateHitbox();
+		smolP4icon.updateHitbox();
 
 		if (curBeat % gfSpeed == 0)
 		{

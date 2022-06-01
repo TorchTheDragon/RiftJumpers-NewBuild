@@ -135,7 +135,7 @@ class Character extends FlxSprite
 
 			case 'dad':
 				noteSkin = 'normal';
-				healthColor = 0xFFAF66CE;
+				healthColor = 0xFF690096;
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('DADDY_DEAREST','shared',true);
 				frames = tex;
@@ -429,6 +429,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
+				//dad = 690096
+				//mom = D8558E
 				noteSkin = 'normal';
 				healthColor = 0xFFD8558E;
 				frames = Paths.getSparrowAtlas('mom_dad_christmas_assets','shared',true);

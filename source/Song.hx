@@ -161,8 +161,8 @@ class Song
 
 			for(ii in i.sectionNotes)
 			{
-				if (ii[3] == null)
-					ii[3] = false;
+				if (ii[4] == null)
+					ii[4] = false;
 			}
 
 			index++;
