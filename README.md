@@ -12,7 +12,7 @@
 
 # Social Links
 
-[![Discord](https://img.shields.io/discord/815508464548839424?color=%235865F2&label=The%20Gamer%20Squad%20Discord&style=flat-square)](https://discord.gg/XBFqJk7Vtp) [![GitHub issues](https://img.shields.io/github/issues/TorchTheDragon/FNFRiftJumpers?color=%23a30000&label=Issues&style=flat-square)](https://github.com/TorchTheDragon/FNFRiftJumpers/issues) [![Discord](https://img.shields.io/discord/940306467641258005?color=%235865F2&label=Rift%20Jumpers%20Crew%20Discord%20%28View%20Only%29&style=flat-square)](https://discord.gg/3jeR5MmBsH)
+[![Discord](https://img.shields.io/discord/815508464548839424?color=%235865F2&label=The%20Gamer%20Squad%20Discord&style=flat-square)](https://discord.gg/XBFqJk7Vtp) [![GitHub issues](https://img.shields.io/github/issues/TorchTheDragon/RiftJumpers-NewBuild?color=%23a30000&label=Issues&style=flat-square)](https://github.com/TorchTheDragon/RiftJumpers-NewBuild/issues) [![Discord](https://img.shields.io/discord/940306467641258005?color=%235865F2&label=Rift%20Jumpers%20Crew%20Discord%20%28View%20Only%29&style=flat-square)](https://discord.gg/3jeR5MmBsH)
 
 # Rift Jumpers Features
 
