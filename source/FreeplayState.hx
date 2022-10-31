@@ -70,6 +70,10 @@ class FreeplayState extends MusicBeatState
 		clean();
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('data/freeplaySonglist'));
 
+		var titleChange:String = 'FNF: Rift Jumpers - Freeplay List';
+		var gameWindow = Application.current.window;
+		gameWindow.title = titleChange;
+
 		//var diffList = "";
 
 		songData = [];

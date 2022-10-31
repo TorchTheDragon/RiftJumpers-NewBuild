@@ -13,13 +13,15 @@ class Event
 	public var position:Float;
 	public var value:Float;
 	public var type:String;
+	public var word:String;
 
-	public function new(name:String,pos:Float,value:Float,type:String)
+	public function new(name:String,pos:Float,value:Float,type:String,word:String)
 	{
 		this.name = name;
 		this.position = pos;
 		this.value = value;
 		this.type = type;
+		this.word = word;
 	}
 }
 
@@ -133,7 +135,7 @@ class Song
 
 
 		if (song.eventObjects == null)
-			song.eventObjects = [new Song.Event("Init BPM",0,song.bpm,"BPM Change")];
+			song.eventObjects = [new Song.Event("Init BPM",0,song.bpm,"BPM Change",'')];
 
 		for(i in song.eventObjects)
 		{
@@ -141,8 +143,9 @@ class Song
 			var type = Reflect.field(i,"type");
 			var pos = Reflect.field(i,"position");
 			var value = Reflect.field(i,"value");
+			var word = Reflect.field(i,"word");
 
-			convertedStuff.push(new Song.Event(name,pos,value,type));
+			convertedStuff.push(new Song.Event(name,pos,value,type,word));
 		}
 
 		song.eventObjects = convertedStuff;
@@ -162,7 +165,7 @@ class Song
 			{
 				trace("converting changebpm for section " + index);
 				ba = i.bpm;
-				song.eventObjects.push(new Song.Event("FNF BPM Change " + index,beat,i.bpm,"BPM Change"));
+				song.eventObjects.push(new Song.Event("FNF BPM Change " + index,beat,i.bpm,"BPM Change",""));
 			}
 
 			for(ii in i.sectionNotes)

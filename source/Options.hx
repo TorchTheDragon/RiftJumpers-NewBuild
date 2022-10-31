@@ -207,6 +207,27 @@ class GhostTapOption extends Option
 	}
 }
 
+class NoteSplashOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.noteSplash = !FlxG.save.data.noteSplash;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return FlxG.save.data.noteSplash ? "Note Splashes Enabled" : "No Note Splashes";
+	}
+}
+
 class AccuracyOption extends Option
 {
 	public function new(desc:String)
@@ -224,6 +245,25 @@ class AccuracyOption extends Option
 	private override function updateDisplay():String
 	{
 		return "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
+	}
+}
+
+class TimeBar extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.timeBar = !FlxG.save.data.timeBar;
+		display = updateDisplay();
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "Time Bar " + (!FlxG.save.data.timeBar ? "off" : "on");
 	}
 }
 
@@ -946,6 +986,7 @@ class ResetSettings extends Option
 		FlxG.save.data.optimize = null;
 		FlxG.save.data.cacheImages = null;
 		FlxG.save.data.editor = null;
+		FlxG.save.data.timeBar = null;
 
 		KadeEngineData.initSave();
 		confirm = false;

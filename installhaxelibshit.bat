@@ -1,4 +1,4 @@
-mkdir "%HAXELIB_ROOT%"
+mkdir .\%HAXELIB_ROOT%
 haxelib setup "%HAXELIB_ROOT%"
 pause 
 cinst neko --version 2.3.0 -y

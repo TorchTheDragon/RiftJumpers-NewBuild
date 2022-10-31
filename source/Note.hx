@@ -17,6 +17,9 @@ class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
 	public var baseStrum:Float = 0;
+
+	public var affectedX:Bool = false;
+	//public var isDownscroll:Bool = false;
 	
 	public var charterSelected:Bool = false;
 
@@ -35,6 +38,10 @@ class Note extends FlxSprite
 	public var originColor:Int = 0; // The sustain note's original note's color
 	public var noteSection:Int = 0;
 	public var noteType:Int = 0;
+	public var isShifter:Bool = false; //I think I want to make this an option for all note types
+
+	public var susX:Float = 0;
+	public var oX:Float = 0;
 
 	public var isAlt:Bool = false;
 
@@ -56,6 +63,7 @@ class Note extends FlxSprite
 	public var localAngle:Float = 0; // The angle to be edited inside Note.hx
 
 	public var dataColor:Array<String> = ['purple', 'blue', 'green', 'red'];
+	public var dataDirection:Array<String> = ['Left', 'Down', 'Up', 'Right'];
 	public var quantityColor:Array<Int> = [RED_NOTE, 2, BLUE_NOTE, 2, PURP_NOTE, 2, BLUE_NOTE, 2];
 	public var arrowAngles:Array<Int> = [180, 90, 270, 0];
 
@@ -66,7 +74,7 @@ class Note extends FlxSprite
 
 	public var children:Array<Note> = [];
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int = 0, ?noteSkin:String = 'normal', ?skin2:String = 'normal', ?isAlt:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int = 0, ?isShifter:Bool = false, ?noteSkin:String = 'normal', ?skin2:String = 'normal', ?isAlt:Bool = false)
 	{
 		super();
 
@@ -81,6 +89,7 @@ class Note extends FlxSprite
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 
+		this.isShifter = isShifter;
 		this.noteType = noteType;
 
 		x += 50;
@@ -130,7 +139,7 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}
-					case 2 | 6:
+					case 2:
 					{
 						loadGraphic(Paths.image('notes/pixel/combined/' + noteSkin + skin2, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
@@ -148,7 +157,7 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}
-					case 1 | 5:
+					case 1:
 					{
 						loadGraphic(Paths.image('notes/pixel/character/' + skin2, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
@@ -166,7 +175,7 @@ class Note extends FlxSprite
 						setGraphicSize(widthSize);
 						updateHitbox();
 					}	
-					case 0 | 4:
+					case 0:
 					{
 						loadGraphic(Paths.image('notes/pixel/character/' + noteSkin, 'riftjumpers'), true, 17, 17);
 						if (isSustainNote)
@@ -233,10 +242,24 @@ class Note extends FlxSprite
 					case 3:
 						frames = Paths.getSparrowAtlas('notes/special/lightsout', 'riftjumpers');
 
-						animation.addByPrefix('greenScroll', 'offUP'); 
-						animation.addByPrefix('redScroll', 'offRIGHT');
-						animation.addByPrefix('blueScroll', 'offDOWN');
-						animation.addByPrefix('purpleScroll', 'offLEFT');
+						for (i in 0...4)
+						{
+							animation.addByPrefix(dataColor[i] + 'Scroll', 'off' + dataDirection[i]);
+						}
+					case 4:
+						frames = Paths.getSparrowAtlas('notes/special/blueflame', 'riftjumpers'); //Blueflame is only temporary till an actual texture is made
+						
+						for (i in 0...4)
+						{
+							animation.addByPrefix(dataColor[i] + 'Scroll', 'flame' + dataDirection[i]);
+						}
+					case 5:
+						frames = Paths.getSparrowAtlas('notes/special/instaheal', 'riftjumpers');
+
+						for (i in 0...4)
+						{
+							animation.addByPrefix(dataColor[i] + "Scroll", 'heal' + dataDirection[i].toUpperCase());
+						}
 					default:
 						frames = Paths.getSparrowAtlas('notes/normal', 'riftjumpers'); //in case something breaks, don't want notes to not fully work
 						for (i in 0...4)

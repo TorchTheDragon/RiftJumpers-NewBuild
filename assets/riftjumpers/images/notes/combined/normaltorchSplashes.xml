@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="normaltorchSplashes.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="1downImpact0000" x="325" y="639" width="194" height="186" frameX="-47" frameY="-57" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1downImpact0001" x="524" y="639" width="220" height="218" frameX="-31" frameY="-34" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1downImpact0002" x="749" y="639" width="284" height="293" frameX="-7" frameY="-2" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1downImpact0003" x="1038" y="639" width="291" height="303"/>
+	<SubTexture name="1leftImpact0000" x="5" y="5" width="194" height="186" frameX="-47" frameY="-57" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1leftImpact0001" x="204" y="5" width="220" height="218" frameX="-31" frameY="-34" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1leftImpact0002" x="429" y="5" width="284" height="293" frameX="-7" frameY="-2" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1leftImpact0003" x="718" y="5" width="291" height="303"/>
+	<SubTexture name="1rightImpact0000" x="1334" y="639" width="194" height="186" frameX="-47" frameY="-57" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1rightImpact0001" x="1533" y="639" width="220" height="218" frameX="-31" frameY="-34" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1rightImpact0002" x="1758" y="639" width="284" height="293" frameX="-7" frameY="-2" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1rightImpact0003" x="5" y="965" width="291" height="303"/>
+	<SubTexture name="1upImpact0000" x="1014" y="5" width="194" height="186" frameX="-47" frameY="-57" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1upImpact0001" x="1213" y="5" width="220" height="218" frameX="-31" frameY="-34" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1upImpact0002" x="1438" y="5" width="284" height="293" frameX="-7" frameY="-2" frameWidth="291" frameHeight="303"/>
+	<SubTexture name="1upImpact0003" x="1727" y="5" width="291" height="303"/>
+	<SubTexture name="2downImpact0000" x="301" y="965" width="202" height="211" frameX="-69" frameY="-68" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2downImpact0001" x="508" y="965" width="235" height="240" frameX="-47" frameY="-45" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2downImpact0002" x="748" y="965" width="298" height="315" frameX="-9" frameY="-6" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2downImpact0003" x="1051" y="965" width="315" height="321"/>
+	<SubTexture name="2leftImpact0000" x="5" y="313" width="202" height="211" frameX="-69" frameY="-68" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2leftImpact0001" x="212" y="313" width="235" height="240" frameX="-47" frameY="-45" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2leftImpact0002" x="452" y="313" width="298" height="315" frameX="-9" frameY="-6" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2leftImpact0003" x="755" y="313" width="315" height="321"/>
+	<SubTexture name="2rightImpact0000" x="1371" y="965" width="202" height="211" frameX="-69" frameY="-68" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2rightImpact0001" x="1578" y="965" width="235" height="240" frameX="-47" frameY="-45" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2rightImpact0002" x="5" y="1291" width="298" height="315" frameX="-9" frameY="-6" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2rightImpact0003" x="308" y="1291" width="315" height="321"/>
+	<SubTexture name="2upImpact0000" x="1075" y="313" width="202" height="211" frameX="-69" frameY="-68" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2upImpact0001" x="1282" y="313" width="235" height="240" frameX="-47" frameY="-45" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2upImpact0002" x="1522" y="313" width="298" height="315" frameX="-9" frameY="-6" frameWidth="315" frameHeight="321"/>
+	<SubTexture name="2upImpact0003" x="5" y="639" width="315" height="321"/>
+</TextureAtlas>

@@ -20,11 +20,13 @@ class KeyBinds
         FlxG.save.data.downBind = "S";
         FlxG.save.data.leftBind = "A";
         FlxG.save.data.rightBind = "D";
+        FlxG.save.data.dodgeButton = 'SPACE';
         FlxG.save.data.killBind = "R";
         FlxG.save.data.gpupBind = "DPAD_UP";
         FlxG.save.data.gpdownBind = "DPAD_DOWN";
         FlxG.save.data.gpleftBind = "DPAD_LEFT";
         FlxG.save.data.gprightBind = "DPAD_RIGHT";
+        FlxG.save.data.gpdodgeBind = "SPACE";
         PlayerSettings.player1.controls.loadKeyBinds();
 
 	}
@@ -76,8 +78,18 @@ class KeyBinds
             FlxG.save.data.killBind = "R";
             trace("No KILL");
         }
+        if(FlxG.save.data.dodgeBind == null){
+            FlxG.save.data.dodgeBind = "SPACE";
+            trace("No DODGE");
+        }
+        if (StringTools.contains(FlxG.save.data.dodgeBind,"NUMPAD"))
+            FlxG.save.data.dodgeBind = "SPACE";
+        if(FlxG.save.data.gpdodgeBind == null){
+            FlxG.save.data.gpdodgeBind = "A";
+            trace("No GDODGE");
+        }
 
-        trace('${FlxG.save.data.leftBind}-${FlxG.save.data.downBind}-${FlxG.save.data.upBind}-${FlxG.save.data.rightBind}');
+        trace('${FlxG.save.data.leftBind}-${FlxG.save.data.downBind}-${FlxG.save.data.upBind}-${FlxG.save.data.rightBind}-${FlxG.save.data.dodgeButton}');
     }
 
 }

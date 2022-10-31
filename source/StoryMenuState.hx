@@ -1,5 +1,6 @@
 package;
 
+import lime.app.Application;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -89,6 +90,10 @@ class StoryMenuState extends MusicBeatState
 	override function create()
 	{
 		weekUnlocked = unlockWeeks();
+
+		var titleChange:String = 'FNF: Rift Jumpers - Story Mode';
+		var gameWindow = Application.current.window;
+		gameWindow.title = titleChange;
 
 		#if windows
 		// Updating Discord Rich Presence

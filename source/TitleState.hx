@@ -6,6 +6,7 @@ import smTools.SMFile;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
@@ -39,6 +40,10 @@ using StringTools;
 
 class TitleState extends MusicBeatState
 {
+	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
+	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
@@ -56,6 +61,10 @@ class TitleState extends MusicBeatState
 		#if polymod
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
+
+		var titleChange:String = 'FNF: Rift Jumpers - Title Screen';
+		var gameWindow = Application.current.window;
+		gameWindow.title = titleChange;
 		
 		#if sys
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
@@ -70,6 +79,10 @@ class TitleState extends MusicBeatState
 		#if !cpp
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
+
+		FlxG.sound.muteKeys = muteKeys;
+		FlxG.sound.volumeDownKeys = volumeDownKeys;
+		FlxG.sound.volumeUpKeys = volumeUpKeys;
 
 		PlayerSettings.init();
 

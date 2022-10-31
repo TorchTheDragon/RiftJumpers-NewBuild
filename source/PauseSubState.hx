@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxStringUtil;
 import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 #if windows
@@ -17,12 +18,14 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import lime.app.Application;
 
 class PauseSubState extends MusicBeatSubstate
 {
+	public static var instance:PauseSubState;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', /*'Keybinds',*/ 'Exit to menu']; //Would like to figure out how to add keybind changes later
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -32,6 +35,9 @@ class PauseSubState extends MusicBeatSubstate
 
 	public function new(x:Float, y:Float)
 	{
+		var gameWindow = Application.current.window;
+		gameWindow.title = gameWindow.title + " (PAUSED)";
+
 		super();
 
 		if (PlayState.instance.useVideo)
@@ -208,7 +214,11 @@ class PauseSubState extends MusicBeatSubstate
 		if (controls.ACCEPT && !FlxG.keys.pressed.ALT)
 		{
 			var daSelected:String = menuItems[curSelected];
-
+			if (daSelected != "Keybinds")
+			{
+				var gameWindow = Application.current.window;
+				gameWindow.title = StringTools.replace(gameWindow.title, " (PAUSED)", "");
+			}
 			
 			switch (daSelected)
 			{
@@ -224,6 +234,8 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					PlayState.instance.clean();
 					FlxG.resetState();
+				case "Keybinds":
+					{}
 				case "Exit to menu":
 					PlayState.startTime = 0;
 					if (PlayState.instance.useVideo)

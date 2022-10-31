@@ -106,3 +106,6 @@ If you're looking for documentation, changelogs, or guides, you can find those o
 ### Kade Engine Devs
 - [KadeDeveloper](https://twitter.com/KadeDeveloper) - Maintainer and lead programmer
 - [The contributors](https://github.com/KadeDev/Kade-Engine/graphs/contributors)
+
+### [Note Splashes](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/art/flashFiles/NOTE_splashes.fla)
+- [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) - Used Art Assets

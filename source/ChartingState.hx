@@ -137,6 +137,8 @@ class ChartingState extends MusicBeatState
 
 	var noteTypeText:String = "Normal";
 	var noteType:Int = 0;
+	var typeNames:Array<String> = ['1st Player Sings', '2nd Player Sings', 'Duet', 'Lights Out', 'Time Travel', 'Close Game']; //Added to make my job so much fucking easier
+	var isShifter:Bool = false;
 
 	var singingPlayerText:String = 'Solo';
 	var singingPlayer:Int = 1;
@@ -144,6 +146,10 @@ class ChartingState extends MusicBeatState
 	override function create()
 	{
 		curSection = lastSection;
+
+		var titleChange:String = 'FNF: Rift Jumpers - Charting';
+		var gameWindow = Application.current.window;
+		gameWindow.title = titleChange;
 
 		trace(1 > Math.POSITIVE_INFINITY);
 
@@ -228,10 +234,10 @@ class ChartingState extends MusicBeatState
 		var index = 0;
 
 		if (_song.eventObjects == null)
-			_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change")];
+			_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change","")];
 
 		if (_song.eventObjects.length == 0)
-			_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change")];
+			_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change","")];
 		
 
 		trace("goin");
@@ -243,6 +249,7 @@ class ChartingState extends MusicBeatState
 			var type = Reflect.field(i,"type");
 			var pos = Reflect.field(i,"position");
 			var value = Reflect.field(i,"value");
+			var word = Reflect.field(i,"word");
 
 			if (type == "BPM Change")
 			{
@@ -592,7 +599,7 @@ class ChartingState extends MusicBeatState
 	{
 			if (_song.eventObjects == null)
 			{
-				_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change")];
+				_song.eventObjects = [new Song.Event("Init BPM",0,_song.bpm,"BPM Change","")];
 			}
 	
 			var firstEvent = "";
@@ -606,11 +613,11 @@ class ChartingState extends MusicBeatState
 			var nameLabel = new FlxText(150, 5, 'Event Name');
 			var eventName = new FlxUIInputText(150,20,80,"");
 			var typeLabel = new FlxText(10, 45, 'Type of Event');
-			var eventType = new FlxUIDropDownMenu(10,60,FlxUIDropDownMenu.makeStrIdLabelArray(["BPM Change", "Scroll Speed Change"], true));
+			var eventType = new FlxUIDropDownMenu(10,60,FlxUIDropDownMenu.makeStrIdLabelArray(["BPM Change", "Scroll Speed Change", "QTE", "Dodge"], true));
 			var valueLabel = new FlxText(150, 45, 'Event Value');
 			var eventValue = new FlxUIInputText(150,60,80,"");
 			var eventSave = new FlxButton(10,155,"Save Event", function() {
-				var pog:Song.Event = new Song.Event(currentSelectedEventName,currentEventPosition,HelperFunctions.truncateFloat(Std.parseFloat(savedValue), 3),savedType);
+				var pog:Song.Event = new Song.Event(currentSelectedEventName,currentEventPosition,HelperFunctions.truncateFloat(Std.parseFloat(savedValue), 3),savedType,"");
 	
 				trace("trying to save " + currentSelectedEventName);
 
@@ -637,6 +644,7 @@ class ChartingState extends MusicBeatState
 						var type = Reflect.field(i,"type");
 						var pos = Reflect.field(i,"position");
 						var value = Reflect.field(i,"value");
+						var word = Reflect.field(i,"word");
 
 						trace(i.type);
 						if (type == "BPM Change")
@@ -680,9 +688,11 @@ class ChartingState extends MusicBeatState
 			});
 			var posLabel = new FlxText(150, 85, 'Event Position');
 			var eventPos = new FlxUIInputText(150,100,80,"");
+			var wordLabel = new FlxText(10, 85, 'Word');
+			var eventWord = new FlxUIInputText(10, 100, 80, "");
 			var eventAdd = new FlxButton(95,155,"Add Event", function() {
 
-				var pog:Song.Event = new Song.Event("New Event " + HelperFunctions.truncateFloat(curDecimalBeat, 3),HelperFunctions.truncateFloat(curDecimalBeat, 3),_song.bpm,"BPM Change");
+				var pog:Song.Event = new Song.Event("New Event " + HelperFunctions.truncateFloat(curDecimalBeat, 3),HelperFunctions.truncateFloat(curDecimalBeat, 3),_song.bpm,"BPM Change","");
 				
 				trace("adding " + pog.name);
 
@@ -777,7 +787,7 @@ class ChartingState extends MusicBeatState
 
 				if (firstEvent == null)
 				{
-					_song.eventObjects.push(new Song.Event("Init BPM",0,_song.bpm,"BPM Change"));
+					_song.eventObjects.push(new Song.Event("Init BPM",0,_song.bpm,"BPM Change",""));
 					firstEvent = _song.eventObjects[0];
 				}
 
@@ -810,6 +820,7 @@ class ChartingState extends MusicBeatState
 						var type = Reflect.field(i,"type");
 						var pos = Reflect.field(i,"position");
 						var value = Reflect.field(i,"value");
+						var word = Reflect.field(i,"word");
 
 						trace(i.type);
 						if (type == "BPM Change")
@@ -860,10 +871,11 @@ class ChartingState extends MusicBeatState
 				var type = Reflect.field(event,"type");
 				var pos = Reflect.field(event,"position");
 				var value = Reflect.field(event,"value");
+				var word = Reflect.field(event,"word");
 
 				trace(value);
 
-				var eventt = new Song.Event(name,pos,value,type);
+				var eventt = new Song.Event(name,pos,value,type,word);
 
 				chartEvents.push(eventt);
 				listofnames.push(name);
@@ -941,6 +953,7 @@ class ChartingState extends MusicBeatState
 			};
 			trace("bruh");
 
+			Typeables.push(eventWord);
 			Typeables.push(eventPos);
 			Typeables.push(eventValue);
 			Typeables.push(eventName);
@@ -952,12 +965,14 @@ class ChartingState extends MusicBeatState
 			tab_events.add(nameLabel);
 			tab_events.add(listLabel);
 			tab_events.add(typeLabel);
+			tab_events.add(wordLabel);
 			tab_events.add(eventName);
 			tab_events.add(eventValue);
 			tab_events.add(eventSave);
 			tab_events.add(eventAdd);
 			tab_events.add(eventRemove);
 			tab_events.add(eventPos);
+			tab_events.add(eventWord);
 			tab_events.add(updatePos);
 			tab_events.add(eventType);
 			tab_events.add(listOfEvents);
@@ -1427,7 +1442,7 @@ class ChartingState extends MusicBeatState
 					{
 						for(n in ii.sectionNotes)
 							if (n[0] == i.connectedNoteData[0] && n[1] == i.connectedNoteData[1])
-								n[4] = i.connectedNoteData[4];
+								n[5] = i.connectedNoteData[5];
 					}
 				}
 			}
@@ -1477,7 +1492,7 @@ class ChartingState extends MusicBeatState
 
 						var thing = ii.sectionNotes[ii.sectionNotes.length - 1];
 
-						var note:Note = new Note(strum, Math.floor(i[1] % 4), null, false, noteType);
+						var note:Note = new Note(strum, Math.floor(i[1] % 4), null, false, noteType, isShifter);
 						note.rawNoteData = i[1];
 						note.sustainLength = i[2];
 						note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -1730,16 +1745,25 @@ class ChartingState extends MusicBeatState
 		var numTwo = FlxG.keys.justPressed.NUMPADTWO;
 		var numFour = FlxG.keys.justPressed.NUMPADFOUR;
 		var numFive = FlxG.keys.justPressed.NUMPADFIVE;
+		var shift = FlxG.keys.justPressed.SHIFT;
+
+		var typeAmount:Int = typeNames.length - 1;
 
 		if (numTwo)
 			noteType ++;
 		if (numOne)
 			noteType --;
-		if (noteType > 3)
+		if (noteType > typeAmount)
 			noteType = 0;
 		if (noteType < 0)
-			noteType = 3;
+			noteType = typeAmount;
 
+		if (shift)
+			isShifter = !isShifter;
+
+		noteTypeText = typeNames[noteType];
+
+		/*
 		switch (noteType)
 		{
 			case 0:
@@ -1753,6 +1777,7 @@ class ChartingState extends MusicBeatState
 			case 4 | 5 | 6:
 				noteTypeText = 'Test ' + noteType;
 		}
+		*/
 
 		for(i in sectionRenderes)
 			{
@@ -1994,7 +2019,7 @@ class ChartingState extends MusicBeatState
 					{
 						copiedNotes = [];
 						for(i in selectedBoxes.members)
-							copiedNotes.push([i.connectedNote.strumTime,i.connectedNote.rawNoteData,i.connectedNote.sustainLength,i.connectedNote.isAlt]);
+							copiedNotes.push([i.connectedNote.strumTime, i.connectedNote.rawNoteData, i.connectedNote.sustainLength, i.connectedNote.isAlt]);
 
 						var firstNote = copiedNotes[0][0];
 
@@ -2209,7 +2234,11 @@ class ChartingState extends MusicBeatState
 		+ "\n "
 		+ "\nNum 1 & 2 To Switch"
 		+ "\nCurrent NoteType:"
-		+ "\n" + noteTypeText;
+		+ "\n" + noteTypeText
+		+ "\n "
+		+ "\nShift to Switch "
+		+ "\nShifter Enabled:"
+		+ "\n" + isShifter;
 
 
 		var left = FlxG.keys.justPressed.ONE;
@@ -2739,8 +2768,9 @@ class ChartingState extends MusicBeatState
 				var daStrumTime = i[0];
 				var daSus = i[2];
 				var daType = i[3];
+				var daShift = i[4];
 
-				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType, null, null, i[4]);
+				var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType, daShift, null, null, i[5]);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
 				note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -3101,9 +3131,9 @@ class ChartingState extends MusicBeatState
 		var noteSus = 0;
 
 		if (n != null)
-			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType]);
+			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType, n.isShifter]);
 		else
-			section.sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
+			section.sectionNotes.push([noteStrum, noteData, noteSus, noteType, isShifter]);
 
 		var thingy = section.sectionNotes[section.sectionNotes.length - 1];
 
@@ -3113,7 +3143,7 @@ class ChartingState extends MusicBeatState
 
 		if (n == null)
 		{
-			var note:Note = new Note(noteStrum, noteData % 4, null, false, noteType);
+			var note:Note = new Note(noteStrum, noteData % 4, null, false, noteType, isShifter);
 			note.rawNoteData = noteData;
 			note.sustainLength = noteSus;
 			note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -3143,7 +3173,7 @@ class ChartingState extends MusicBeatState
 		}
 		else
 		{
-			var note:Note = new Note(n.strumTime, n.noteData % 4, null, false, n.noteType);
+			var note:Note = new Note(n.strumTime, n.noteData % 4, null, false, n.noteType, n.isShifter);
 			note.rawNoteData = n.noteData;
 			note.sustainLength = noteSus;
 			note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));

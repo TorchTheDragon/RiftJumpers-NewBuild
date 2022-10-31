@@ -122,7 +122,11 @@ class Ratings
             rating = "bad";
         if (ms < 90 * ts && ms >= 45 * ts)
             rating = "good";
-        if (ms < 45 * ts && ms >= -45 * ts)
+        if (ms < 45 * ts && ms >= 20 * ts)
+            rating = "sick";
+        if (ms < 20 * ts && ms >= -20 * ts)
+            rating = "perfect";
+        if (ms < -20 * ts && ms >= -45 * ts)
             rating = "sick";
         if (ms > -90 * ts && ms <= -45 * ts)
             rating = "good";

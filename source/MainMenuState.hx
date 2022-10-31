@@ -56,6 +56,10 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		var titleChange:String = 'FNF: Rift Jumpers - Main Menu';
+		var gameWindow = Application.current.window;
+		gameWindow.title = titleChange;
+
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));

@@ -29,6 +29,7 @@ class OptionsMenu extends MusicBeatState
 			new DFJKOption(controls),
 			new DownscrollOption("Toggle making the notes scroll down rather than up."),
 			new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),
+			new NoteSplashOption("Do you want to see note splashes or not?"),
 			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
 			#if desktop
 			new FPSCapOption("Change your FPS Cap."),
@@ -47,9 +48,10 @@ class OptionsMenu extends MusicBeatState
 			new StepManiaOption("Sets the colors of the arrows depending on quantization instead of direction."),
 			new AccuracyOption("Display accuracy information on the info bar."),
 			new SongPositionOption("Show the song's current position as a scrolling bar."),
+			// new TimeBar("Do you want the SongPosition bar to have a timer?"),
 			new NPSDisplayOption("Shows your current Notes Per Second on the info bar."),
 			new RainbowFPSOption("Make the FPS Counter flicker through rainbow colors."),
-			new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note."),
+			new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note.")
 		]),
 		
 		new OptionCategory("Misc", [
